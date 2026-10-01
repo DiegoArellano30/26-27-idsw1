@@ -17,3 +17,9 @@
 2. **Dependencia del público:** El aura no existe en un entorno vacio; requiere testigos que reaccionen al hecho.
 3. **Fluctuación constante:** El aura sube con los momentos épicos y baja con momentos ridículos.
 4. **Escala del impacto:** El cambio de aura es proporcional al tamaño y al tipo de audiencia presente.
+
+# Decisiones de Modelado: Farmear aura 
+* `Aura` se representa como una clase conceptual y no como un atributo numérico de `Individuo`, porque tiene reglas, umbrales y estados propios que cambian con el tiempo.
+* `Audiencia` y `Veredicto` se modelan como entidades separadas de `Accion`, porque el cambio de aura no ocurre en soledad y depende enteramente del juicio del público.
+* Se omiten deliberadamente los pensamientos y la autoestima del `Individuo`, porque los estados mentales ocultos no son observables ni atañen a la operación del sistema.
+* No se incluyen identificadores técnicos ni persistencia, para no caer en el antipatrón de confundir el modelo del dominio con un diseño de base de datos.
