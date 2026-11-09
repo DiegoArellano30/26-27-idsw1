@@ -1,0 +1,104 @@
+@startuml
+skinparam style strictuml
+hide empty members
+hide circle
+top to bottom direction
+
+skinparam defaultTextAlignment center
+skinparam roundCorner 8
+skinparam class {
+    BackgroundColor White
+    BorderColor #333333
+}
+
+' ========================================================
+' DEFINICIÓN DE CLASES CONCEPTUALES
+' ========================================================
+
+abstract class Participante {
+ - nombre
+ - apellidos
+}
+
+class Estudiante {
+}
+
+class Profesor {
+}
+
+class Asignatura {
+ - nombre
+}
+
+class SesionDeClase {
+ - fecha
+ - temaTratado
+}
+
+class Temario {
+ - informacionImportante
+}
+
+class RepositorioGitHub {
+ - enlaceAcceso
+}
+
+abstract class Evaluacion {
+ - notaObtenida
+}
+
+class ActividadContinua {
+ - pesoPorcentual = 25%
+}
+
+class ExamenParcial {
+ - pesoPorcentual = 25%
+}
+
+class ExamenFinal {
+ - pesoPorcentual = 50%
+}
+
+class CalificacionFinal {
+ - valorTotal = 100%
+}
+
+' ========================================================
+' JERARQUÍAS (HERENCIA)
+' ========================================================
+
+Participante <|-- Estudiante
+Participante <|-- Profesor
+
+Evaluacion <|-- ActividadContinua
+Evaluacion <|-- ExamenParcial
+Evaluacion <|-- ExamenFinal
+
+' ========================================================
+' RELACIONES ESTRUCTURALES Y DE COMPORTAMIENTO
+' ========================================================
+
+' Marco Académico
+Estudiante "1..*" --> "1..*" Asignatura : cursa >
+Profesor "1..*" --> "1..*" Asignatura : imparte >
+
+' Desarrollo de la Asignatura
+Asignatura "1" *-- "1..*" SesionDeClase : se estructura en >
+Profesor "1" --> "0..*" SesionDeClase : dirige >
+Estudiante "1..*" --> "0..*" SesionDeClase : asiste a >
+
+' Gestión de Contenidos
+Asignatura "1" *-- "1" Temario : desarrolla >
+Temario "1" o-- "1" RepositorioGitHub : se almacena en >
+Profesor "1" --> "1" RepositorioGitHub : gestiona >
+
+' Proceso de Evaluación
+Asignatura "1" *-- "1..*" Evaluacion : requiere >
+Estudiante "1" --> "1..*" Evaluacion : realiza >
+Profesor "1" --> "1..*" Evaluacion : corrige >
+
+' Consolidación de Notas
+Estudiante "1" *-- "1" CalificacionFinal : obtiene >
+CalificacionFinal "1" o-- "1..*" Evaluacion : se compone de >
+
+@enduml
